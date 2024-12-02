@@ -1,0 +1,30 @@
+services:
+    nginx-blue:
+        image: dhinojosa/blue-nginx:1.0.3  # Use pre-built blue nginx image from Docker Hub
+        container_name: nginx-blue
+        ports:
+            - "8081:80"
+        networks:
+            - canary-net
+
+    nginx-green:
+        image: dhinojosa/green-nginx:1.0.3  # Use pre-built green nginx image from Docker Hub
+        container_name: nginx-green
+        ports:
+            - "8082:80"
+        networks:
+            - canary-net
+
+    envoy:
+        image: envoyproxy/envoy:v1.31.0
+        container_name: envoy
+        volumes:
+            - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
+        ports:
+            - "10000:10000"  # Envoy will listen on port 10000
+        networks:
+            - canary-net
+
+networks:
+    canary-net:
+        driver: bridge

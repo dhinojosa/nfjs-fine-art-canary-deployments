@@ -1,0 +1,23 @@
+# deployment-canary.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: simple-nginx-v1
+spec:
+    replicas: 3
+    selector:
+        matchLabels:
+            app: simple-nginx
+            version: v1
+    template:
+        metadata:
+            labels:
+                app: simple-nginx
+                version: v1
+        spec:
+            containers:
+                - name: simple-nginx
+                  image: dhinojosa/simple-nginx:1.0.0
+                  ports:
+                      - containerPort: 80
+

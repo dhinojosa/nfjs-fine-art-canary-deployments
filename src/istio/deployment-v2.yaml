@@ -1,0 +1,22 @@
+# deployment-stable.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: simple-nginx-v2
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: simple-nginx
+            version: v2
+    template:
+        metadata:
+            labels:
+                app: simple-nginx
+                version: v2
+        spec:
+            containers:
+                - name: simple-nginx
+                  image: dhinojosa/simple-nginx:1.0.2
+                  ports:
+                      - containerPort: 80

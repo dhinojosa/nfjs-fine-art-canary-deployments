@@ -1,0 +1,20 @@
+# virtualservice.yaml
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+    name: simple-nginx
+spec:
+    hosts:
+        - "*"
+    gateways:
+        - simple-nginx-gateway
+    http:
+        -   route:
+                -   destination:
+                        host: simple-nginx
+                        subset: v1
+                    weight: 90
+                -   destination:
+                        host: simple-nginx
+                        subset: v2
+                    weight: 10
